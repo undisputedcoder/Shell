@@ -1,6 +1,7 @@
 #define MAX_NUM_COMMANDS  1000
 #define MAX_ARGS 1000
 
+//Hello just testing//
 // command separators
 #define pipeSep  "|"                            // pipe separator "|"
 #define conSep   "&"                            // concurrent execution separator "&"
