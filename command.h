@@ -25,7 +25,7 @@ struct Command_struct {
                              // '|' - the command is followed by '|'.
 };
 
-typedef struct CommandStruct Command;  // command type
+typedef struct Command_struct Command;  // command type
 
 int separateCommands(char *token[], Command command[]);
 

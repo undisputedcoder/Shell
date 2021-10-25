@@ -39,12 +39,12 @@ void searchRedirection(char *token[], Command *cp, int *count)
     while(i < cp->argc) 
     {
     	//standard input("<") redirection
-        if(strcmp(token[count], "<") == 0) 
+        if(strcmp(token[*count], "<") == 0) 
         {  
             cp->redirect_in = token[*count+1]; // '<' found therefore increase count by 1
         } 
         //standard output(">") redirection
-        if (strcmp(token[count], ">") == 0) 
+        if (strcmp(token[*count], ">") == 0) 
         { 
             cp->redirect_out = token[*count+1]; // '>' found therefore increase count by 1
         }
@@ -73,7 +73,7 @@ void buildCommandArgumentArray(char *token[], Command *cp, int *count)
     int k = 0;
     
     //Sets command path name to token[0]
-    cp->com_pathname=token[*count]
+    cp->com_pathname=token[*count];
     
     //Loops around for number of command arguments 
     //sets command arguement vector array
@@ -168,6 +168,7 @@ int separateCommands(char *token[], Command command[])
      return nCommands; 
 }
 
+/*
 //Test parser for debugging
 //Implementation found in: "Notes on Implementation of Shell Project"
 //Documentation author: Hong Xie
@@ -200,4 +201,5 @@ void printComStruct(Command *com)
 	}
 	fprintf(stderr,"com_suffix=%c\n\n", com->com_suffix);
 }
+*/
 
