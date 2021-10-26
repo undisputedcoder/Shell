@@ -170,11 +170,17 @@ int separateCommands(char *token[], Command command[])
      
      //counts redirection using token
      int numRedirection=0;
-     int *countRedirection=&numRedirection;
+     int *countRedirection;
+	 
+	 //change numRedirection address for counting redirection found
+	 countRedirection=&numRedirection;
      
      //counts argument array using token
      int numArgumentArray=0;
-     int *countArgumentArray=&numArgumentArray;
+     int *countArgumentArray;
+	 
+	 //change numArgumentArray address for counting argument array found
+	 countArgumentArray=&numArgumentArray;
      
      //loops through number of commands
      //to fill redirection and argv for each command
