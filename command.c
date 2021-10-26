@@ -22,6 +22,20 @@ int separator(char *token)
     return 0;
 }
 
+void setNull(Command commands[]) {
+	for(int i=0;i<MAX_NUM_COMMANDS;i++) {
+        commands[i].argc=0;
+        commands[i].com_pathname=NULL;
+        for(int j=0; j < MAX_NUM_COMMANDS; j++) {
+            commands[i].argv[j]=NULL;
+        }
+        commands[i].com_suffix = ' ';
+		commands[i].redirect_in=NULL;
+		commands[i].redirect_out=NULL;
+	}
+
+}
+
 // fill command structure of argc 
 // fill command suffix with the details
 void fillCommandStructure(Command *cp, int first, int last, char *com_suffix)
@@ -39,16 +53,16 @@ void searchRedirection(char *token[], Command *cp, int *count)
     while(i < cp->argc) 
     {
     	//standard input("<") redirection
-        if(strcmp(token[count], "<") == 0) 
+        if(strcmp(token[*count], "<") == 0) 
         {  
-            cp->redirect_in = token[*count+1]; // '<' found therefore increase count by 1
+            cp->redirect_in = token[(*count)+1]; // '<' found therefore increase count by 1
         } 
         //standard output(">") redirection
-        if (strcmp(token[count], ">") == 0) 
+        if (strcmp(token[*count], ">") == 0) 
         { 
-            cp->redirect_out = token[*count+1]; // '>' found therefore increase count by 1
+            cp->redirect_out = token[(*count)+1]; // '>' found therefore increase count by 1
         }
-        (*count)++;
+        (*count)++; 
         ++i;
     } 
     (*count)++;
@@ -60,7 +74,7 @@ void buildCommandArgumentArray(char *token[], Command *cp, int *count)
     //reduce argument count by 2 if either redirection is found
     if(cp->redirect_in!=NULL || cp -> redirect_out!=NULL)
     {
-	cp->argc -= 2;
+	    cp->argc -= 2;
     }
     
     if(cp->argv == NULL) 
@@ -73,7 +87,7 @@ void buildCommandArgumentArray(char *token[], Command *cp, int *count)
     int k = 0;
     
     //Sets command path name to token[0]
-    cp->com_pathname=token[*count]
+    cp->com_pathname=token[*count];
     
     //Loops around for number of command arguments 
     //sets command arguement vector array

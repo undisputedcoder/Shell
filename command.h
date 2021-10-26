@@ -1,13 +1,12 @@
 #define MAX_NUM_COMMANDS  1000
 #define MAX_ARGS 1000
 
-//Hello just testing//
 // command separators
 #define pipeSep  "|"                            // pipe separator "|"
 #define conSep   "&"                            // concurrent execution separator "&"
 #define seqSep   ";"                            // sequential execution separator ";"
 
-struct Command_struct { 
+struct CommandStruct { 
      char *com_pathname;     // what is the path name of the command
      int argc;               // the number of arguments to the command
                              // including the command itself
@@ -29,6 +28,8 @@ typedef struct CommandStruct Command;  // command type
 
 int separateCommands(char *token[], Command command[]);
 
-void buildCommandArgumentArray(char *token[], Command *cp);
+void buildCommandArgumentArray(char *token[], Command *cp, int *count);
 
 void printComStruct(Command *command);
+
+void setNull(Command commands[]);
