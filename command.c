@@ -182,6 +182,7 @@ int separateCommands(char *token[], Command command[])
      return nCommands; 
 }
 
+/*
 //Test parser for debugging
 //Implementation found in: "Notes on Implementation of Shell Project"
 //Documentation author: Hong Xie
@@ -214,4 +215,5 @@ void printComStruct(Command *com)
 	}
 	fprintf(stderr,"com_suffix=%c\n\n", com->com_suffix);
 }
+*/
 
