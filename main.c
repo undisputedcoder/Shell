@@ -24,7 +24,9 @@ int main() {
 
     while(1) 
     {
-        setNull(c);
+        setNullTokens(t);
+        setNullCommands(c);
+        
         int again = 1;
         char *linept = NULL; //pointer to line buffer
 
@@ -59,10 +61,36 @@ int main() {
         //4)Jobs in the command line
         for(int i=0; i < nCommands; ++i)
         {
+            //4.1) if the job is the exit command, then terminate the program
             if(strcmp(c[i].argv[0], "exit") == 0) {
                 exit(0);
             }
-        	//4.1) if the job is the exit command, then terminate the program
+
+            //Directory walk using command 'cd'
+			else if(strcmp(c[i].argv[0], "cd")==0)
+			{
+				//if user typed '..' this allow them to go back to previous directory 
+				if(c[i].argc == 2)
+				{
+					chdir(c[i].argv[1]);
+					continue;
+				}
+				//set current directory to home if user type 'cd' wiithout path
+				else if(c[i].argc == 1)
+				{
+					char cwd[128];
+					if(strcmp(getcwd(cwd,128), getenv("HOME"))==0)
+					{
+						printf("Current directory is home directory of the user");
+						continue;
+					}
+					else
+					{
+						chdir(getenv("HOME"));
+						continue;
+					}
+				}
+			}
         	//4.2) create child processes (and pipes, redirections etc) 
         	//4.3) if the job is a background job (ie ended with &) continue
 			//go back for loop

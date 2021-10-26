@@ -22,7 +22,7 @@ int separator(char *token)
     return 0;
 }
 
-void setNull(Command commands[]) {
+void setNullCommands(Command commands[]) {
 	for(int i=0;i<MAX_NUM_COMMANDS;i++) {
         commands[i].argc=0;
         commands[i].com_pathname=NULL;
@@ -40,9 +40,11 @@ void setNull(Command commands[]) {
 // fill command suffix with the details
 void fillCommandStructure(Command *cp, int first, int last, char *com_suffix)
 {   
-     cp->argc = first-last; //Number of command arguments count
+     cp->argc = last-first; //Number of command arguments count
      cp->com_suffix=*com_suffix; //Command suffix: ; & |
 }
+
+
 
 
 // process standard in/out(</>) redirections in a command
@@ -140,7 +142,7 @@ int separateCommands(char *token[], Command command[])
           
      int first=0;   // points to the first tokens of a command
      int last;      // points to the last  tokens of a command
-     char *sep;     // command separator at the end of a command
+     char *sep=NULL;     // command separator at the end of a command
      int c = 0;         // command index
      
      for (i=0; i<nTokens; ++i) 
@@ -167,10 +169,12 @@ int separateCommands(char *token[], Command command[])
      int nCommands = c;
      
      //counts redirection using token
-     int *countRedirection=0;
+     int numRedirection=0;
+     int *countRedirection=&numRedirection;
      
      //counts argument array using token
-     int *countArgumentArray=0;
+     int numArgumentArray=0;
+     int *countArgumentArray=&numArgumentArray;
      
      //loops through number of commands
      //to fill redirection and argv for each command
@@ -181,6 +185,7 @@ int separateCommands(char *token[], Command command[])
  
      return nCommands; 
 }
+
 
 //Test parser for debugging
 //Implementation found in: "Notes on Implementation of Shell Project"

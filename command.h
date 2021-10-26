@@ -32,4 +32,4 @@ void buildCommandArgumentArray(char *token[], Command *cp, int *count);
 
 void printComStruct(Command *command);
 
-void setNull(Command commands[]);
+void setNullCommands(Command commands[]);

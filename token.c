@@ -19,3 +19,11 @@ void tokenise(char line[], char *token[]) {
     }
 
 }
+
+void setNullTokens(char* token[])
+{
+	for(int i=0;i<MAX_NUM_TOKENS;i++)
+	{
+		token[i]=NULL;
+	}
+}

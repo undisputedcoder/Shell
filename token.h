@@ -5,4 +5,4 @@
 #define tokens " \t\n"
 
 void tokenise (char * inputLine, char *token[]);
-
+void setNullTokens(char *[]);
