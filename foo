@@ -1,0 +1,13 @@
+total 80
+-rwxr-xr-x 1 riaz riaz   603 Oct 28 00:48 foo
+-rwxr-xr-x 1 riaz riaz 22288 Oct 28 00:48 main
+-rw-r--r-- 1 riaz riaz  5440 Oct 28 00:48 command.o
+-rw-r--r-- 1 riaz riaz  1856 Oct 28 00:48 token.o
+-rw-r--r-- 1 riaz riaz  7248 Oct 28 00:48 main.o
+-rw-r--r-- 1 riaz riaz  7746 Oct 28 00:48 main.c
+-rw-r--r-- 1 riaz riaz  1646 Oct 27 19:17 command.h
+-rwxr-xr-x 1 riaz riaz     0 Oct 27 19:14 cat
+-rw-r--r-- 1 riaz riaz   429 Oct 26 16:38 token.c
+-rw-r--r-- 1 riaz riaz   170 Oct 26 16:38 token.h
+-rw-r--r-- 1 riaz riaz  5758 Oct 26 16:38 command.c
+-rw-r--r-- 1 riaz riaz   220 Oct 26 16:38 Makefile

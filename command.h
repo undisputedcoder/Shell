@@ -1,4 +1,4 @@
-#define MAX_NUM_COMMANDS  1000
+#define MAX_NUM_COMMANDS  100
 #define MAX_ARGS 1000
 
 // command separators
