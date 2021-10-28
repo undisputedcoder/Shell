@@ -130,7 +130,7 @@ int main() {
                 int fd;
                 fd = open(c[i].redirect_in, O_RDONLY | O_CREAT ,  0777);
 
-                if((pid = fork()) < 0)  {
+                if((pid = fork()) == -1)  {
                     perror("Forking error\n");
                     exit(1);
                 }
@@ -149,7 +149,7 @@ int main() {
             //standard output redirection 
             else if(c->redirect_out != NULL) {
 
-                if((pid = fork()) < 0)  {
+                if((pid = fork()) == -1)  {
                     perror("Forking error\n");
                     exit(1);
                 }
@@ -188,7 +188,7 @@ int main() {
                     exit(1);
                 }
 
-                if((pid = fork()) < 0)  {
+                if((pid = fork()) == -1)  {
                     perror("Piping error\n");
                     exit(1);
                 }
@@ -212,7 +212,7 @@ int main() {
                             file = open(c[i].redirect_out, O_WRONLY | O_CREAT, 0777);
                         }
 
-                        if(cpid = fork() == -1) {
+                        if((cpid = fork()) == -1){
                             perror("Fork error\n");
                             exit(1);
                         }
@@ -248,7 +248,7 @@ int main() {
 
             //standard processing, no piping, no redirection
             else {
-                if((pid = fork()) < 0) {
+                if((pid = fork()) == -1) {
                     perror("Forking error\n");
                     exit(1);
                 }
