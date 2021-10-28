@@ -19,6 +19,9 @@ int main() {
     signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, SIG_IGN);
     signal(SIGTSTP, SIG_IGN);
+    
+    /*used for testing handling slow system call */
+    signal(SIGCHLD, SIG_IGN);
 
     Command c[MAX_NUM_COMMANDS];
     char *t[MAX_NUM_TOKENS];
@@ -130,7 +133,7 @@ int main() {
                 int fd;
                 fd = open(c[i].redirect_in, O_RDONLY | O_CREAT ,  0777);
 
-                if((pid = fork()) == -1)  {
+                if((pid = fork()) == -1) {
                     perror("Forking error\n");
                     exit(1);
                 }
@@ -174,7 +177,7 @@ int main() {
             else if(strcmp(&(c->com_suffix), "|") == 0) {
                 int pipes = 0;
 
-                while (strcmp(&(c->com_suffix), "|") ==0) {
+                while (strcmp(&c[i].com_suffix, "|") ==0) {
                     i++;
                     pipes++;
                 }
@@ -198,13 +201,13 @@ int main() {
                     close(pipefd[1]);
                     close(pipefd[0]);
 
-                    if(execvp(c[i].argv[0], c[i].argv) == -1) {
+                    	 execvp(c[i].argv[0], c[i].argv);
                         perror("Error executing program\n");
                         exit(1);
-                    }                    
+                                        
                 }
                 else if(pid > 0) {
-                    while (strcmp(&(c->com_suffix), "|") ==0) {
+                    while (strcmp(&c[i].com_suffix, "|") ==0) {
                         i++;
                         int file = -1;
 
@@ -223,15 +226,16 @@ int main() {
                                 close(pipefd[1]);
                                 close(pipefd[0]);
                             }
-                        }
+                        
                         dup2(pipefd[0], STDIN_FILENO);
                         close(pipefd[0]);
                         close(pipefd[1]);
 
-                        if(execvp(c[i].argv[0], c[i].argv) == -1) {
+                            execvp(c[i].argv[0], c[i].argv);
                             perror("Error executing program\n");
                             exit(1);
                         }
+                      
                     }
                 }
 
