@@ -105,6 +105,12 @@ int main() {
 					}
 				}
 			}
+
+            else if(strcmp(c[i].argv[0],"cwd")==0)
+			{
+				chdir(c[i].argv[1]);
+				continue;
+			}
         	//4.2) create child processes (and pipes, redirections etc) 
             
             //Note on claiming zombie processes
@@ -124,7 +130,7 @@ int main() {
                 int fd;
                 fd = open(c[i].redirect_in, O_RDONLY | O_CREAT ,  0777);
 
-                if((pid = fork() == -1)) {
+                if((pid = fork()) < 0)  {
                     perror("Forking error\n");
                     exit(1);
                 }
@@ -143,7 +149,7 @@ int main() {
             //standard output redirection 
             else if(c->redirect_out != NULL) {
 
-                if((pid = fork() == -1)) {
+                if((pid = fork()) < 0)  {
                     perror("Forking error\n");
                     exit(1);
                 }
@@ -163,6 +169,8 @@ int main() {
                     }
                 }
             }
+
+            // Check command line for piping '|'
             else if(strcmp(&(c->com_suffix), "|") == 0) {
                 int pipes = 0;
 
@@ -175,12 +183,12 @@ int main() {
                 int pipefd[2];
                 pid_t cpid;
 
-                if(pipe(pipefd) == -1) {
+                if(pipe(pipefd) < 0) {
                     perror("Pipe error\n");
                     exit(1);
                 }
 
-                if(pid=fork() == -1) {
+                if((pid = fork()) < 0)  {
                     perror("Piping error\n");
                     exit(1);
                 }
@@ -237,29 +245,33 @@ int main() {
                     }
                 }
             }
+
+            //standard processing, no piping, no redirection
             else {
-                if((pid = fork() == -1)) {
+                if((pid = fork()) < 0) {
                     perror("Forking error\n");
                     exit(1);
                 }
 
                 if(pid == 0) {
-                    int err = execvp((c[i].argv[0]), (c[i].argv));
-
-                    if(err == -1) {
+                        execvp((c[i].argv[0]),((c[i].argv)));
                         perror("Could not execute program\n");
                         exit(1);
-                    }
                 }
             }
+
         	//4.3) if the job is a background job (ie ended with &) continue
 			//go back for loop
-
-
-		//4.4)Sequential process, shell will wait for the job to finish
+			if(strcmp(&(c[i].com_suffix),"&")==0)
+			{
+				continue;
+			}
+		    //4.4)Sequential process, shell will wait for the job to finish
 			//In this case until child has finished
-
-            
+			else
+			{
+				wait(&status);
+			}        
         }
     }    
 
